@@ -1,0 +1,28 @@
+{
+  "name": "magnet2torrent",
+  "version": "1.0.0",
+  "description": "convert magnet uri to torrent file",
+  "main": "index.js",
+  "bin": "bin/magnet2torrent.js",
+  "scripts": {
+    "test": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/killwing/magnet2torrent.git"
+  },
+  "keywords": [
+    "magnet",
+    "torrent"
+  ],
+  "author": "Kelvin Chen",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/killwing/magnet2torrent/issues"
+  },
+  "homepage": "https://github.com/killwing/magnet2torrent#readme",
+  "dependencies": {
+    "magnet-uri": "^5.0.0",
+    "request": "^2.57.0"
+  }
+}

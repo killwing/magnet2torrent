@@ -36,8 +36,13 @@ function getTorrent(url, hash, cb) {
             if (response.statusCode === 200) {
                 if (response.headers['content-type'] === 'application/octet-stream') {
                     let filename = hash + '.torrent';
-                    response.pipe(fs.createWriteStream(filename));
-                    cb(null, filename);
+                    response.pipe(fs.createWriteStream(filename))
+                    .on('finish', function() {
+                        cb(null, filename);
+                    })
+                    .on('error', function(err) {
+                        cb(err);
+                    });
                 } else {
                     cb('Invalid content type: ' + response.headers['content-type']);
                 }

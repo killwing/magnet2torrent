@@ -8,8 +8,9 @@
     "io.js": "*"
   },
   "scripts": {
-    "test": "npm run lint",
-    "lint": "eslint *.js && echo Lint passed."
+    "test": "npm run lint && npm run test-ci",
+    "test-ci": "mocha",
+    "lint": "eslint *.js test/ && echo Lint passed."
   },
   "repository": {
     "type": "git",
@@ -31,5 +32,6 @@
   },
   "devDependencies": {
     "eslint": "^0.22.1",
+    "mocha": "^2.2.5"
   }
 }

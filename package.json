@@ -10,6 +10,7 @@
   "scripts": {
     "test": "npm run lint && npm run test-ci",
     "test-ci": "mocha",
+    "test-cov": "istanbul cover _mocha --report lcovonly",
     "lint": "eslint *.js test/ && echo Lint passed."
   },
   "repository": {
@@ -32,6 +33,8 @@
   },
   "devDependencies": {
     "eslint": "^0.22.1",
-    "mocha": "^2.2.5"
+    "mocha": "^2.2.5",
+    "istanbul": "^0.3.15",
+    "coveralls": "^2.11.2"
   }
 }

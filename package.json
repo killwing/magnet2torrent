@@ -28,5 +28,8 @@
   "dependencies": {
     "magnet-uri": "^5.0.0",
     "request": "^2.57.0"
+  },
+  "devDependencies": {
+    "eslint": "^0.22.1",
   }
 }

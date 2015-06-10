@@ -1,11 +1,11 @@
 {
   "name": "magnet2torrent",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "convert magnet uri to torrent file",
   "main": "index.js",
   "bin": "bin/magnet2torrent.js",
   "engines": {
-     "io.js": "*"
+    "io.js": "*"
   },
   "scripts": {
     "test": "npm run lint",

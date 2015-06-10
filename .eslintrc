@@ -1,0 +1,15 @@
+{
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "rules": {
+        "indent": [2, 4],
+        "quotes": [2, "single"],
+        "curly": 2,
+        "no-use-before-define": 2,
+        "no-unused-vars": [2, {"args":"none"}],
+        "space-after-keywords": [2, "always"],
+        "space-before-blocks": [2, "always"]
+    }
+}

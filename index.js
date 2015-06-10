@@ -7,7 +7,7 @@ let request = require('request');
 let servIdx = 0;
 let servUrl = [
     function(hash) {
-        return 'http://bt.box.n0808.com/' + hash.slice(0, 2) + '/' + hash.slice(-2)+ '/' + hash + '.torrent';
+        return 'http://bt.box.n0808.com/' + hash.slice(0, 2) + '/' + hash.slice(-2) + '/' + hash + '.torrent';
     },
     function(hash) {
         return 'http://torrage.com/torrent/' + hash + '.torrent';
@@ -33,8 +33,8 @@ function getTorrent(url, hash, cb) {
             cb(err);
         })
         .on('response', function(response) {
-            if (response.statusCode == 200) {
-                if (response.headers['content-type'] == 'application/octet-stream') {
+            if (response.statusCode === 200) {
+                if (response.headers['content-type'] === 'application/octet-stream') {
                     let filename = hash + '.torrent';
                     response.pipe(fs.createWriteStream(filename));
                     cb(null, filename);
@@ -48,7 +48,7 @@ function getTorrent(url, hash, cb) {
 }
 
 function getNext(hash, cb) {
-    if (servIdx != servUrl.length) {
+    if (servIdx !== servUrl.length) {
         getTorrent(servUrl[servIdx++](hash), hash, function(err, filename) {
             if (err) {
                 console.log(err);

@@ -1,4 +1,3 @@
-#!/usr/bin/env iojs
 'use strict';
 
 let fs = require('fs');

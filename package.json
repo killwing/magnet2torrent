@@ -4,6 +4,9 @@
   "description": "convert magnet uri to torrent file",
   "main": "index.js",
   "bin": "bin/magnet2torrent.js",
+  "engines": {
+     "io.js": "*"
+  },
   "scripts": {
     "test": "npm run lint"
   },

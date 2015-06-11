@@ -4,7 +4,6 @@ let fs = require('fs');
 let mguri = require('magnet-uri');
 let request = require('request');
 
-let servIdx = 0;
 let servUrl = [
     function(hash) {
         return 'http://bt.box.n0808.com/' + hash.slice(0, 2) + '/' + hash.slice(-2) + '/' + hash + '.torrent';
@@ -52,21 +51,6 @@ function getTorrent(url, hash, cb) {
         });
 }
 
-function getNext(hash, cb) {
-    if (servIdx !== servUrl.length) {
-        getTorrent(servUrl[servIdx++](hash), hash, function(err, filename) {
-            if (err) {
-                console.log(err);
-                getNext(hash, cb);
-            } else {
-                cb(null, filename);
-            }
-        });
-    } else {
-        cb('All services tried.');
-    }
-}
-
 module.exports = function(uri, cb) {
     let hash = parseInfoHash(uri);
     if (!hash) {
@@ -74,5 +58,21 @@ module.exports = function(uri, cb) {
         return;
     }
 
-    getNext(hash, cb);
+    let servIdx = 0;
+    let getNext = function() {
+        if (servIdx !== servUrl.length) {
+            getTorrent(servUrl[servIdx++](hash), hash, function(err, filename) {
+                if (err) {
+                    console.log(err);
+                    getNext();
+                } else {
+                    cb(null, filename);
+                }
+            });
+        } else {
+            cb('All services tried.');
+        }
+    };
+
+    getNext();
 };

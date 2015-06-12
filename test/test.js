@@ -6,12 +6,17 @@ let m2t = require('..');
 describe('magnet2torrent', function() {
     this.timeout(10000);
 
-    it('invalid uri', function() {
+    it('invalid uri', function(done) {
         m2t('mgnet:?xt=urn:btih:g229d3ac324ea8c2af60c97359cdb03ba0aae4ed', function(err, filename) {
             assert(err);
+            done();
         });
+    });
+
+    it('invalid hash', function(done) {
         m2t('229D3AC324EA8C2AF60C97359CDB03BA0AAE4ED', function(err, filename) {
             assert(err);
+            done();
         });
     });
 

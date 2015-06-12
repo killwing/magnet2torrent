@@ -54,7 +54,7 @@ function getTorrent(url, hash, cb) {
 module.exports = function(uri, cb) {
     let hash = parseInfoHash(uri);
     if (!hash) {
-        cb('Invalid magnet uri or info hash.');
+        process.nextTick(cb, 'Invalid magnet uri or info hash.');
         return;
     }
 
@@ -70,7 +70,7 @@ module.exports = function(uri, cb) {
                 }
             });
         } else {
-            cb('All services tried.');
+            process.nextTick(cb, 'All services tried.');
         }
     };
 

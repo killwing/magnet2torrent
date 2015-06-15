@@ -3,13 +3,14 @@
 let fs = require('fs');
 let mguri = require('magnet-uri');
 let request = require('request');
+let zlib = require('zlib');
 
 let servUrl = [
     function(hash) {
         return 'http://bt.box.n0808.com/' + hash.slice(0, 2) + '/' + hash.slice(-2) + '/' + hash + '.torrent';
     },
     function(hash) {
-        return 'http://torrage.com/torrent/' + hash + '.torrent';
+        return 'https://torrage.com/torrent/' + hash + '.torrent';
     },
     function(hash) {
         return 'http://torcache.net/torrent/' + hash + '.torrent';
@@ -27,16 +28,37 @@ function parseInfoHash(uri) {
 
 function getTorrent(url, hash, cb) {
     console.log('Get torrent from:', url);
-    request.get(url)
+    let options = {
+        url: url,
+        headers: {
+            'User-Agent': 'Node.js/12.0 io.js/2.0',
+            'Accept-Encoding': 'gzip,deflate'
+        }
+    };
+    request.get(options)
         .on('error', function(err) {
             cb(err);
         })
         .on('response', function(response) {
             if (response.statusCode === 200) {
-                if (response.headers['content-type'] === 'application/octet-stream') {
+                if (response.headers['content-type'] === 'application/octet-stream' ||
+                    response.headers['content-type'] === 'application/x-bittorrent') {
                     let filename = hash + '.torrent';
-                    response.pipe(fs.createWriteStream(filename))
-                    .on('finish', function() {
+                    let dest;
+                    switch (response.headers['content-encoding']) {
+                    case 'gzip':
+                    case 'deflate':
+                        dest = response.pipe(zlib.createUnzip()).on('error', function(err) {
+                            cb(err);
+                        })
+                        .pipe(fs.createWriteStream(filename));
+                        break;
+                    default:
+                        dest = response.pipe(fs.createWriteStream(filename));
+                        break;
+                    }
+
+                    dest.on('finish', function() {
                         cb(null, filename);
                     })
                     .on('error', function(err) {
